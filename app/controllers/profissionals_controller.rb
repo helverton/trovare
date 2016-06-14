@@ -37,7 +37,7 @@ class ProfissionalsController < ApplicationController
         if (params[:modal])
           format.html { redirect_to '/profissional_servicos/new', notice: 'Profissional cadastrado com sucesso.' }
         else
-          format.html { redirect_to @profissional, notice: 'Profissional cadastrado com sucesso.' }
+          format.html { redirect_to profissionals_url, notice: 'Profissional cadastrado com sucesso.' }
         end
         format.json { render :show, status: :created, location: @profissional }
       else
@@ -56,7 +56,7 @@ class ProfissionalsController < ApplicationController
 
     respond_to do |format|
       if @profissional.update(profissional_params)
-        format.html { redirect_to @profissional, notice: 'Profissional atualizado com sucesso.' }
+        format.html { redirect_to profissionals_url, notice: 'Profissional atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @profissional }
       else
         format.html { render :edit }

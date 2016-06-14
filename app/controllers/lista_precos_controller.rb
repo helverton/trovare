@@ -34,7 +34,7 @@ class ListaPrecosController < ApplicationController
 
     respond_to do |format|
       if @lista_preco.save
-        format.html { redirect_to @lista_preco, notice: 'Lista foi criada com sucesso.' }
+        format.html { redirect_to lista_precos_url, notice: 'Lista foi criada com sucesso.' }
         format.json { render :show, status: :created, location: @lista_preco }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class ListaPrecosController < ApplicationController
   def update
     respond_to do |format|
       if @lista_preco.update(lista_preco_params)
-        format.html { redirect_to @lista_preco, notice: 'Lista foi atualizada com sucesso.' }
+        format.html { redirect_to lista_precos_url, notice: 'Lista foi atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @lista_preco }
       else
         format.html { render :edit }

@@ -86,7 +86,7 @@ class UsersController < ApplicationController
         if (params[:modal])
           format.html { redirect_to '/reservas/new', notice: 'Usuário foi criado com sucesso.' }
         else
-          format.html { redirect_to @user, notice: 'Usuário foi criado com sucesso.' }
+          format.html { redirect_to users_url, notice: 'Usuário foi criado com sucesso.' }
         end
         format.json { render :show, status: :created, location: @user }
       else
@@ -105,7 +105,7 @@ class UsersController < ApplicationController
       @r = Reserva.where(entidade_id: @user.entidade_id, status: 1)
 
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'Atualizado com sucesso.' }
+        format.html { redirect_to users_url, notice: 'Atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }

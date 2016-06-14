@@ -57,7 +57,7 @@ class ServicosController < ApplicationController
         if (params[:modal])
           format.html { redirect_to '/profissional_servicos/new', notice: 'Serviço cadastrado com sucesso.' }
         else
-          format.html { redirect_to @servico, notice: 'Serviço cadastrado com sucesso.' }
+          format.html { redirect_to servicos_url, notice: 'Serviço cadastrado com sucesso.' }
         end
         format.json { render :show, status: :created, location: @servico }
       else
@@ -72,7 +72,7 @@ class ServicosController < ApplicationController
   def update
     respond_to do |format|
       if @servico.update(servico_params)
-        format.html { redirect_to @servico, notice: 'Serviço atualizado com sucesso.' }
+        format.html { redirect_to servicos_url, notice: 'Serviço atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @servico }
       else
         format.html { render :edit }

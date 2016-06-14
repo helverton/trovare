@@ -94,7 +94,7 @@ class EntidadesController < ApplicationController
 
     respond_to do |format|
       if @entidade.save
-        format.html { redirect_to @entidade, notice: 'Entidade cadastrada com sucesso.' }
+        format.html { redirect_to entidades_url, notice: 'Entidade cadastrada com sucesso.' }
         format.json { render :show, status: :created, location: @entidade }
       else
         format.html { render :new }
@@ -108,7 +108,7 @@ class EntidadesController < ApplicationController
   def update
     respond_to do |format|
       if @entidade.update(entidade_params)
-        format.html { redirect_to @entidade, notice: 'Entidade atualizada com sucesso.' }
+        format.html { redirect_to entidades_url, notice: 'Entidade atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @entidade }
       else
         format.html { render :edit }

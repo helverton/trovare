@@ -229,7 +229,7 @@ class ReservasController < ApplicationController
 
     respond_to do |format|
       if @reserva.update(reserva_params)
-        format.html { redirect_to @reserva, notice: 'Reserva atualizada com sucesso.' }
+        format.html { redirect_to reservas_url, notice: 'Reserva atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @reserva }
       else
         format.html { render :edit }

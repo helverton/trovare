@@ -32,7 +32,7 @@ class RamosController < ApplicationController
         if (params[:modal])
           format.html { redirect_to '/entidades/new', notice: 'Ramo foi criado com sucesso.' }
         else
-          format.html { redirect_to @ramo, notice: 'Ramo foi criado com sucesso.' }
+          format.html { redirect_to ramos_url, notice: 'Ramo foi criado com sucesso.' }
         end
         format.json { render :show, status: :created, location: @ramo }
       else
@@ -47,7 +47,7 @@ class RamosController < ApplicationController
   def update
     respond_to do |format|
       if @ramo.update(ramo_params)
-        format.html { redirect_to @ramo, notice: 'Ramo foi atualizado com sucesso.' }
+        format.html { redirect_to ramos_url, notice: 'Ramo foi atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @ramo }
       else
         format.html { render :edit }

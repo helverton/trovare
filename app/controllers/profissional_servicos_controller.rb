@@ -45,7 +45,7 @@ class ProfissionalServicosController < ApplicationController
         if (params[:modal])
           format.html { redirect_to '/reservas/new', notice: 'Vinculo cadastrado com sucesso.' }
         else
-          format.html { redirect_to @profissional_servico, notice: 'Vinculo cadastrado com sucesso.' }
+          format.html { redirect_to profissional_servicos_url, notice: 'Vinculo cadastrado com sucesso.' }
         end
         format.json { render :show, status: :created, location: @profissional_servico }
       else
@@ -66,7 +66,7 @@ class ProfissionalServicosController < ApplicationController
 
     respond_to do |format|
       if @profissional_servico.update(profissional_servico_params)
-        format.html { redirect_to @profissional_servico, notice: 'Vinculo atualizado com sucesso.' }
+        format.html { redirect_to profissional_servicos_url, notice: 'Vinculo atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @profissional_servico }
       else
         format.html { render :edit }

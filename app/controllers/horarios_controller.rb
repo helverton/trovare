@@ -48,7 +48,7 @@ class HorariosController < ApplicationController
 
     respond_to do |format|
       if @horario.save
-        format.html { redirect_to @horario, notice: 'Horario salvo com sucesso.' }
+        format.html { redirect_to horarios_url, notice: 'Horario salvo com sucesso.' }
         format.json { render :show, status: :created, location: @horario }
       else
         format.html { render :new }
@@ -66,7 +66,7 @@ class HorariosController < ApplicationController
 
     respond_to do |format|
       if @horario.update(horario_params)
-        format.html { redirect_to @horario, notice: 'Horario atualizado com sucesso.' }
+        format.html { redirect_to horarios_url, notice: 'Horario atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @horario }
       else
         format.html { render :edit }
