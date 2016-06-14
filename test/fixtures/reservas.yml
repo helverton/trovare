@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  data: 2016-04-02
+  hora_inicio: 2016-04-02 00:41:10
+  nota: 1
+  status: 1
+  servico_id: 
+  profissional_id: 
+  entidade_id: 
+  user_id: 
+
+two:
+  data: 2016-04-02
+  hora_inicio: 2016-04-02 00:41:10
+  nota: 1
+  status: 1
+  servico_id: 
+  profissional_id: 
+  entidade_id: 
+  user_id: 

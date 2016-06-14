@@ -1,0 +1,46 @@
+<%= form_for @lista_preco, :html => { :class => "form-horizontal lista_preco" } do |f| %>
+
+  <% if @lista_preco.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@lista_preco.errors.count, "erro") %> verifique:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @lista_preco.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="lista_preco_servico_id"><i class="fa fa-pencil-square-o"></i> Serviço</label>
+    <div>
+      <%= f.collection_select :servico_id, @servicos.order(:nome),:id,:nome, {prompt: "Selecione"}, {class: "form-control"} %>
+    </div>
+    <%=f.error_span(:servico_id) %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="lista_preco_preco"><i class="fa fa-pencil-square-o"></i> Preço</label>
+    <div>
+      <%= f.text_field :preco, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:preco) %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="lista_preco_tempo"><i class="fa fa-pencil-square-o"></i> Tempo</label>
+    <div>
+      <%= f.number_field :tempo, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:tempo) %>
+  </div>
+
+  <div>
+    <button type="submit" name="commit" class="btn btn-success btn-block">Salvar lista de preço</button>
+  </div>
+
+<% end %>

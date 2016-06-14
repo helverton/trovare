@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <title>
+    Trovare Servizio
+  </title>
+  <link rel="stylesheet" media="all" href="site/trovare/login.css" data-turbolinks-track="true" />
+</head>
+
+<body class="login">
+  <section class="pipe-login" style="position: fixed;">
+    <div class="hidden-sm hidden-xs pipe-slogan col-md-8">
+      <div style="float: left; width: 680px; padding-top: 230px;">
+        <h2><strong>Trovare Servizio</strong></h2>
+        <h2>Organizar a agenda da sua empresa pode ser fácil</h2>
+      </div>
+    </div>
+
+    <div class="container col-md-4">
+      <%= render 'layouts/messages' %>
+      <form class="col-md-offset-1" id="new_user" action="/login" accept-charset="UTF-8" method="post">
+        <input name="utf8" type="hidden" value="&#x2713;" />
+        <input type="hidden" name="authenticity_token" value="E0cSPYwqIcTiNsppuuLxp1F9toiPZ8IkCjsOmVPOcU7owvGEMNBRoVvY0C1oNb3d0hh8ZiI4QU8ki6to250Ilw==" />
+
+
+        <div class="title col-md-12">
+          <h2>Seja bem vindo,</h2>
+          <p>Acesse a sua conta no Trovare</p>
+        </div>
+        <div class="form-group">
+          <input tabindex="1" autofocus="autofocus" placeholder="Digite seu e-mail" class="form-control" type="email" id="email" name="email" />
+        </div>
+        <div class="form-group">
+          <input tabindex="2" autocomplete="off" class="form-control" placeholder="Sua senha" type="password" id="password" name="password" />
+        </div>
+        <div class="form-group">
+          <input type="submit" name="commit" value="Acessar" tabindex="3" class="btn btn-default signin" />
+        </div>
+        <div class="or-another">
+          <span>ou</span>
+        </div>
+        <div class="form-group">
+          <a tabindex="4" class="btn btn-default next-step" href="/">Voltar ao site</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script src="site/trovare/login.js" data-turbolinks-track="true"></script>
+  </script>
+  <script>
+    $(".pipe-slogan").backstretch([
+      "https://raw.githubusercontent.com/helverton/trovare/master/app/assets/images/cabelo.jpg",
+      "https://raw.githubusercontent.com/helverton/trovare/master/app/assets/images/eletric.jpg",
+      "https://raw.githubusercontent.com/helverton/trovare/master/app/assets/images/cozi.jpg"
+    ], {duration: 2000, fade: 750});
+  </script>
+  <script>
+    $(function() {
+      $('.btn-signup').click(function(e) {
+        e.preventDefault();
+        window.location = $(this).attr('href') + '?email=' + $('#user_login').val();
+      });
+      $('.forgot-passwd').click(function(e) {
+        e.preventDefault();
+
+        window.location = $(this).attr('href') + '?email=' + $('#user_login').val();
+      });
+    });
+  </script>
+</body>
+</html>

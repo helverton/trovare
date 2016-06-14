@@ -1,0 +1,44 @@
+<%= form_for @profissional, :html => { :class => "form-horizontal profissional" } do |f| %>
+
+  <% if @profissional.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@profissional.errors.count, "erro") %> verifique:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @profissional.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="nome"><i class="fa fa-pencil-square-o"></i> Nome</label>
+    <div>
+      <%= f.text_field :nome, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:nome) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="email"><i class="fa fa-pencil-square-o"></i> Email</label>
+    <div>
+      <%= f.text_field :email, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:email) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="telefone"><i class="fa fa-pencil-square-o"></i> Telefone</label>
+    <div>
+      <%= f.text_field :telefone, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:telefone) %>
+  </div>
+
+  <div>
+    <button type="submit" name="commit" class="btn btn-success btn-block">Salvar profissional</button>
+  </div>
+
+<% end %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  descricao: MyString
+  tempo: 1
+  preco: 1.5
+  status: 1
+  entidade_id: 
+
+two:
+  nome: MyString
+  descricao: MyString
+  tempo: 1
+  preco: 1.5
+  status: 1
+  entidade_id: 

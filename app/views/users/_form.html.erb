@@ -1,0 +1,95 @@
+<%= form_for @user, :html => { :class => "form-horizontal user" } do |f| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@user.errors.count, "erro") %> verifique:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="nome"><i class="fa fa-pencil-square-o"></i> Nome</label>
+    <div>
+      <%= f.text_field :nome, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:nome) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="email"><i class="fa fa-pencil-square-o"></i> Email</label>
+    <div>
+      <%= f.email_field :email, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:email) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="senha"><i class="fa fa-pencil-square-o"></i> Senha</label>
+    <div>
+      <%= f.password_field :password, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:password) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="user_password_confirmation"><i class="fa fa-pencil-square-o"></i> Confirmar</label>
+    <div>
+      <%= f.password_field :password_confirmation, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:password_confirmation) %>
+  </div>
+  <div class="form-group">
+    <% if (current_user) %>
+    <label class="control-label" for="tipo"><i class="fa fa-pencil-square-o"></i> Tipo</label>
+    <div>
+      <select name="user[tipo]" id="user_tipo" class="form-control">
+        <% @levels.each do |level| %>
+          <option value="<%= level[0] %>"><%= level[1]  %></option>
+        <% end %>
+      </select>
+    </div>
+    <%=f.error_span(:tipo) %>
+    <% end %>
+  </div>
+
+  <% if ((current_user.tipo.eql? 1) || (current_user.tipo.eql? 2)) %>
+    <div class="form-group">
+      <label class="control-label" for="status"><i class="fa fa-pencil-square-o"></i> Status</label>
+      <div>
+        <select name="user[status]" id="user_status" class="form-control">
+          <% if(!@user.status.nil?) %>
+            <option value="<%= @user.status %>"><%= case @user.status when 1 then 'Ativo' when 0 then 'Inativo' end %></option>
+            <option value="1">Ativo</option> 
+          <% end %>
+        </select>
+      </div>
+      <%=f.error_span(:tipo) %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+  <% if (current_user) %>
+    <% if (current_user.tipo.eql? 1) %>
+   
+    <label class="control-label" for="entidade"><i class="fa fa-pencil-square-o"></i> Entidade</label>
+    <div>
+      <%= f.collection_select :entidade_id, Entidade.order(:nome),:id,:nome, {prompt: "Selecione"}, {class: "form-control"} %>              
+    </div>
+    
+    <% end %>
+  <% end %>
+
+
+    <%=f.error_span(:entidade_id) %>
+  </div>
+
+  <div>
+    <button type="submit" name="commit" class="btn btn-success btn-block">Salvar usuário</button>
+  </div>
+
+<% end %>

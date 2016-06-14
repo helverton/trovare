@@ -1,0 +1,25 @@
+<%- model_class = ListaPreco -%>
+<div class="page-header">
+  <h1>Serviço</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:preco) %>:</strong></dt>
+  <dd><%= @lista_preco.preco %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:tempo) %>:</strong></dt>
+  <dd><%= @lista_preco.tempo %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
+  <dd><%= @lista_preco.status %></dd>
+  <dt><strong>Serviço:</strong></dt>
+  <dd><%= @lista_preco.servico.nome %></dd>
+</dl>
+
+<%= link_to t('Voltar'),
+              lista_precos_path, :class => 'btn btn-default'  %>
+<%= link_to t('Editar'),
+              edit_lista_preco_path(@lista_preco), :class => 'btn btn-default' %>
+<%= link_to t('Excluir'),
+              lista_preco_path(@lista_preco),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Você tem certeza?')) },
+              :class => 'btn btn-danger' %>

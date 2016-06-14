@@ -1,0 +1,230 @@
+<%= form_for @reserva, :html => { :class => "form-horizontal reserva" } do |f| %>
+
+  <% if @reserva.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@reserva.errors.count, "erro") %> verifique:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @reserva.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <% if (!current_user.tipo.eql? 4) %>
+    <div class="form-group">
+      <label class="control-label" for="reserva_user_id"><i class="fa fa-pencil-square-o"></i> Cliente</label>
+      <div>
+        <%= f.collection_select :user_id, @clientes.order(:nome),:id,:nome, {prompt: "Selecione"}, {class: "form-control"} %> 
+      <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newCliente">
+        Cadastrar
+      </button>     
+      </div>
+      <%=f.error_span(:user_id) %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="lista_preco_id"><i class="fa fa-pencil-square-o"></i> Serviço</label>
+    <div>
+        <select class="form-control find" name="reserva[lista_preco_id]" id="reserva_lista_preco_id">
+          <% if(@reserva.lista_preco_id.nil?) %>
+            <option value="">Selecione</option>
+          <% else %>
+            <option value="<%= @reserva.lista_preco_id %>"><%= @reserva.lista_preco.servico.nome %></option>
+          <% end %>
+          <% @lista_precos.each do |lista| %>
+            <option value="<%= lista.id %>"><%= lista.servico.nome %></option>
+          <% end %>
+        </select>
+    </div>
+    <%=f.error_span(:lista_preco_id) %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="reserva_profissional_id"><i class="fa fa-pencil-square-o"></i> Profissional</label>
+    <div>
+      <%= f.collection_select :profissional_id, @profissionais.order(:nome),:id,:nome, {prompt: "Selecione"}, {class: "form-control find"} %>
+      <% if(current_user.tipo.eql? 2) %>
+        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newVinculo">
+          Cadastrar
+        </button>
+      <% end %>
+    </div>
+    <%=f.error_span(:profissional_id) %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="data"><i class="fa fa-pencil-square-o"></i> Data</label>
+    <div>
+      <%= f.date_field :data, :class => 'form-control find' %>
+    </div>
+    <%=f.error_span(:data) %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="reserva_hora_inicio"><i class="fa fa-pencil-square-o"></i> Hora</label>
+    <div>
+      <select class="form-control" name="reserva[hora_inicio]" id="reserva_hora_inicio">
+        <% if(@reserva.hora_inicio.nil?) %>
+          <option value="">Selecione</option>
+        <% else %>
+          <option value="<%= @reserva.hora_inicio.strftime("%H:%M:%S") %>"><%= @reserva.hora_inicio.strftime("%H:%M:%S") %></option>
+        <% end %>
+      </select>
+    </div>
+    <%=f.error_span(:hora_inicio) %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="telefone"><i class="fa fa-pencil-square-o"></i> Telefone</label>
+    <div>
+      <%= f.text_field :telefone, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:telefone) %>
+  </div>
+
+  <div>
+    <button type="submit" name="commit" class="btn btn-success btn-block">Salvar reserva</button>
+  </div>
+
+<% end %>
+
+
+<!---Modal-->
+  <!-- Modal -->
+  <div class="modal fade" id="newVinculo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div>
+
+        <div class="col-lg-8 forms">
+            <div class="col-lg-12 active">
+              <div class="startform-header">
+                <div class="left">
+                  <a href="/reservas/new"><i class="fa fa-times fa-2x close"></i></a>
+                </div>
+                <div>
+                  <i class="fa fa-magic fa-2x"></i>
+                </div>
+                <h2>cadastrar novo <strong>Vínculo profissional e serviço</strong></h2>
+                <a href=""></a>
+              </div>
+              <form class="form-horizontal profissional_servico" id="new_profissional_servico" action="/profissional_servicos" accept-charset="UTF-8" method="post">
+                <input name="utf8" type="hidden" value="✓">
+                <input name="modal" type="hidden" value="modal">
+                <input type="hidden" name="authenticity_token" value="POtshFayjHii5Zky11gaADFQnbw2QG44sXOceNoujrhfbWP1Yh9uQST7VN3b6/1jjvAOxCXMa9dqw4Gku6mfIg==">
+
+                <div class="form-group">
+                  <label class="control-label" for="profissional_id">
+                    <i class="fa fa-pencil-square-o"></i> Profissional
+                  </label>
+                  <div>
+                    <select class="form-control" name="profissional_servico[profissional_id]" id="profissional_servico_profissional_id">
+                      <option value="">Selecione</option>
+                      <% @profissionais.each do |profissional| %>
+                        <option value="<%= profissional.id %>"><%= profissional.nome %></option>
+                      <% end %>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="servico_id">
+                    <i class="fa fa-pencil-square-o"></i> Serviço
+                  </label>
+                  <div>
+                    <select class="form-control" name="profissional_servico[servico_id]" id="profissional_servico_servico_id">
+                      <option value="">Selecione</option>
+                      <% @lista_precos.each do |servico| %>
+                        <option value="<%= servico.servico_id %>"><%= servico.servico.nome %></option>
+                      <% end %>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <button type="submit" name="commit" class="btn btn-success btn-block">Salvar vínculo</button>
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- modal-->
+<div class="modal fade" id="newCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="col-lg-8 forms">
+        <div class="col-lg-12 active">
+          <div class="startform-header">
+            <div class="left">
+              <a href="/reservas/new"><i class="fa fa-times fa-2x close"></i></a>
+            </div>
+            <div>
+              <i class="fa fa-magic fa-2x"></i>
+            </div>
+            <h2>cadastrar novo <strong>Cliente</strong></h2>
+            <a href=""></a>
+          </div>
+          <form class="form-horizontal user" id="new_user" action="/users" accept-charset="UTF-8" method="post">
+          <input name="utf8" type="hidden" value="✓">
+          <input name="modal" type="hidden" value="modal">
+          <input type="hidden" name="authenticity_token" value="BCt09dX0el/GnnshlWCGfcXu6MAfB3HX8Phlij2c4vOn3AG7WMjeJHNK5BfeRY/4l9/VvKoQoxlowGxRlvlNQw==">
+
+            <div class="form-group">
+              <label class="control-label" for="nome"><i class="fa fa-pencil-square-o"></i> Nome</label>
+              <div>
+                <input class="form-control" type="text" name="user[nome]" id="user_nome">
+              </div>
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="email"><i class="fa fa-pencil-square-o"></i> Email</label>
+              <div>
+                <input class="form-control" type="email" name="user[email]" id="user_email">
+              </div>
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="senha"><i class="fa fa-pencil-square-o"></i> Senha</label>
+              <div>
+                <input class="form-control" type="password" name="user[password]" id="user_password">
+              </div>
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="user_password_confirmation"><i class="fa fa-pencil-square-o"></i> Confirmar</label>
+              <div>
+                <input class="form-control" type="password" name="user[password_confirmation]" id="user_password_confirmation">
+              </div>
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="tipo"><i class="fa fa-pencil-square-o"></i> Tipo</label>
+              <div>
+                <select name="user[tipo]" id="user_tipo" class="form-control">
+                    <option value="4">Cliente</option>
+                </select>
+              </div>
+              
+            </div>
+
+            <div class="form-group">
+
+
+              
+            </div>
+
+            <div>
+              <button type="submit" name="commit" class="btn btn-success btn-block">Salvar usuário</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

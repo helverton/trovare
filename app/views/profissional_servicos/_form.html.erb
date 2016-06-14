@@ -1,0 +1,104 @@
+<%= form_for @profissional_servico, :html => { :class => "form-horizontal profissional_servico" } do |f| %>
+
+  <% if @profissional_servico.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@profissional_servico.errors.count, "erro") %> verifique:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @profissional_servico.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="profissional_id"><i class="fa fa-pencil-square-o"></i> Profissional</label>
+    <div>
+      <%= f.collection_select :profissional_id, @profissionais.order(:nome),:id,:nome, {prompt: "Selecione"}, {class: "form-control"} %>
+      <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newProfissional">
+        Cadastrar
+      </button>
+    </div>
+    <%=f.error_span(:profissional_id) %>
+  </div>
+
+
+  <div class="form-group">
+    <label class="control-label" for="lista_preco_id"><i class="fa fa-pencil-square-o"></i> Serviço</label>
+    <div>
+        <select class="form-control" name="profissional_servico[lista_preco_id]" id="profissional_servico_lista_preco_id">
+          <% if(@profissional_servico.lista_preco_id.nil?) %>
+            <option value="">Selecione</option>
+          <% else %>
+            <option value="<%= @profissional_servico.lista_preco_id %>"><%= @profissional_servico.lista_preco.servico.nome %></option>
+          <% end %>
+          <% @lista_precos.each do |lista| %>
+            <option value="<%= lista.id %>"><%= lista.servico.nome %></option>
+          <% end %>
+        </select>
+    </div>
+    <%=f.error_span(:lista_preco_id) %>
+  </div>
+
+
+  <div>
+    <button type="submit" name="commit" class="btn btn-success btn-block">Salvar vínculo</button>
+  </div>
+
+<% end %>
+
+  <!---Modal ramos-->
+  <!-- Modal -->
+  <div class="modal fade" id="newProfissional" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div>
+
+        <div class="col-lg-8 forms">
+            <div class="col-lg-12 active">
+              <div class="startform-header">
+                <div class="left">
+                  <a href="/profissional_servicos/new"><i class="fa fa-times fa-2x close"></i></a>
+                </div>
+                <div>
+                  <i class="fa fa-magic fa-2x"></i>
+                </div>
+                <h2>cadastrar novo <strong>Profissional</strong></h2>
+                <a href=""></a>
+              </div>
+              <form class="form-horizontal profissional" id="new_profissional" action="/profissionals" accept-charset="UTF-8" method="post">
+                <input name="utf8" type="hidden" value="✓">
+                <input name="modal" type="hidden" value="modal">
+                <input type="hidden" name="authenticity_token" value="0b/Q9MJkkh1VCVjXh0zB64m/eWSe2hlE85JHmZsJIqeyOd+F9slwJNMXlTiL/yaINh/qHI1WHKsoIlpF+o4zPQ==">
+
+                <div class="form-group">
+                  <label class="control-label" for="nome"><i class="fa fa-pencil-square-o"></i> Nome</label>
+                  <div>
+                    <input class="form-control" type="text" name="profissional[nome]" id="profissional_nome">
+                  </div>       
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="email"><i class="fa fa-pencil-square-o"></i> Email</label>
+                  <div>
+                    <input class="form-control" type="text" name="profissional[email]" id="profissional_email">
+                  </div>          
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="telefone"><i class="fa fa-pencil-square-o"></i> Telefone</label>
+                  <div>
+                    <input class="form-control" type="text" name="profissional[telefone]" id="profissional_telefone">
+                  </div>         
+                </div>
+                <div>
+                  <button type="submit" name="commit" class="btn btn-success btn-block">Salvar profissional</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>

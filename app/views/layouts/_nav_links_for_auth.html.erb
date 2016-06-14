@@ -1,0 +1,70 @@
+<% if current_user %>
+	<!--li>
+	    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span> Dashboard</a>
+	    <ul class="nav-pills nav-stacked" style="list-style-type:none;">	
+	    </ul>
+	</li-->
+	<li>
+	    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span> Listar
+	    <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+	    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+			
+			<% if (current_user.tipo.eql? 1) %>
+				<li><%= link_to 'Usuários', users_path %></li>
+				<li><%= link_to 'Ramos', ramos_path %></li>
+				<li><%= link_to 'Serviços', servicos_path %></li>
+				<li><%= link_to 'Entidades', entidades_path %></li>
+			<% elsif (current_user.tipo.eql? 2) %>
+				<li><%= link_to 'Usuários', users_path %></li>
+				<li><%= link_to 'Horarios', horarios_path %></li>
+				<li><%= link_to 'Serviços', lista_precos_path %></li>
+				<li><%= link_to 'Profissionais', profissionals_path %></li>
+				<li><%= link_to 'Profissionais e Serviços', profissional_servicos_path %></li>
+				<li><%= link_to 'Reservas', reservas_path %></li>
+			<% elsif (current_user.tipo.eql? 3) %>
+				<li><%= link_to 'Usuários', users_path %></li>
+				<li><%= link_to 'Reservas', reservas_path %></li>
+			<% else %>
+				<li><%= link_to 'Reservas', reservas_path %></li>
+			<% end %>
+		</ul>
+
+		<a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-plus-square-o fa-stack-1x "></i></span> Cadastrar
+		<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+	    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+			
+			<% if (current_user.tipo.eql? 1) %>
+				<li><%= link_to 'Usuários', new_user_path %></li>
+				<li><%= link_to 'Ramos', new_ramo_path %></li>
+				<li><%= link_to 'Serviços', new_servico_path %></li>
+				<li><%= link_to 'Entidades', new_entidade_path %></li>
+			<% elsif (current_user.tipo.eql? 2) %>
+				<li><%= link_to 'Usuários', new_user_path %></li>
+				<li><%= link_to 'Horarios', new_horario_path %></li>
+				<li><%= link_to 'Serviços', new_lista_preco_path %></li>
+				<li><%= link_to 'Profissionais', new_profissional_path %></li>
+				<li><%= link_to 'Profissionais e Serviços', new_profissional_servico_path %></li>
+				<li><%= link_to 'Reservas', new_reserva_path %></li>
+			<% elsif (current_user.tipo.eql? 3) %>
+				<li><%= link_to 'Usuários', new_user_path %></li>
+				<li><%= link_to 'Reservas', new_reserva_path %></li>
+			<% else %>
+				<li><%= link_to 'Reservas', new_reserva_path %></li>
+			<% end %>
+		</ul>
+
+		<% if (!current_user.tipo.eql? 3) %>
+		<a href="/users/<%= current_user.id %>/edit">
+			<span class="fa-stack fa-lg pull-left">
+				<i class="fa fa-fw fa-user fa-stack-1x "></i>
+			</span> editar <%= current_user.nome %>  
+		</a>
+		<% end %>
+		<a href="/logout">
+			<span class="fa-stack fa-lg pull-left">
+				<i class="fa fa-sign-out fa-stack-1x "></i>
+			</span> Sair
+		</a>  
+	</li>
+<% else %>
+<% end %>

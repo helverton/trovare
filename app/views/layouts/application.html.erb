@@ -1,0 +1,186 @@
+<% if (current_user) %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Trovare Servizio" %>">
+    <meta name="author" content="">
+    <title>Trovare Servizio</title>
+    <link href="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" rel="shortcut icon">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%#= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <script src="/jquery.self.js"></script>
+    <script src="/jquery_ujs.self.js"></script>
+
+</head>
+<body style="background-color:#f2f2f2">
+    <nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+              <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+            </button>
+            <a class="navbar-brand" href="#">TROVARE <i class="fa fa-search"></i> SERVIZIO</a>
+        </div><!-- navbar-header-->
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active" >
+                    <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> 
+                        <span class="fa fa-bars" aria-hidden="true"></span> Menu
+                    </button>
+                </li>
+            </ul>
+        </div><!-- bs-example-navbar-collapse-1 -->
+
+    </nav>
+
+    <div id="wrapper" class="toggled-2">
+        <!-- Sidebar -->
+        <br/>
+        <br/>
+        <br/>   
+        <div id="sidebar-wrapper" class="fixed">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+                <%= render 'layouts/nav_links_for_auth' %>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">            
+            <%= yield %>
+            <%= render 'layouts/messages' %>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>    
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+         $("#menu-toggle-2").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled-2");
+            $('#menu li').removeClass('active');
+            $('#menu ul').hide();
+        });
+
+        function initMenu() {
+          $('#menu ul').hide();
+          $('#menu ul').children('.current').parent().show();
+
+
+          $('#menu li a').click(function() {
+              var checkElement = $(this).next();
+              if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                //return false;
+                $('#menu ul:visible').slideUp('normal');
+              }
+
+              if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                $('#menu ul:visible').slideUp('normal');
+                checkElement.slideDown('normal');
+                return false;
+              }
+          });
+        }
+        $(document).ready(function() {initMenu();});
+    </script>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("#filter").DataTable( {
+        "language": {
+            "lengthMenu": "_MENU_ registros por paginas",
+            "zeroRecords": "Nada encontrado - desculpe",
+            "info": "Pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "Nenhum registro disponivel",
+            "infoFiltered": "(filtro aplicado em _MAX_ registros)",
+            "search": "Encontre",
+            "oPaginate": {
+                              "sFirst":    "Primeiro",
+                              "sPrevious": "Anterior",
+                              "sNext":     "Seguinte",
+                              "sLast":     "Último"
+                          }
+        }
+      });
+    });  
+    </script>
+
+
+    <script type="text/javascript">
+      $("#reserva_lista_preco_id").change(function() {
+        var param = $("#reserva_lista_preco_id option:selected").val();
+        
+        $.ajax({
+            url: "/api/profissionais/"+param+".json",
+            type: "GET",
+            dataType: "json",
+
+            success: function(data) {
+                $("#reserva_profissional_id option").remove();
+
+                var toAppend = '';
+                $.each(data,function(i,o){
+                toAppend += '<option value='+o.id+'>'+o.nome+'</option>';
+              });
+
+             $('#reserva_profissional_id').append(toAppend);
+            }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function change() {
+        var pf = $("#reserva_profissional_id option:selected").val();
+        var dt = $("#reserva_data").val();
+        var lp = $("#reserva_lista_preco_id").val();
+        
+        $.ajax({
+            url: "/api/"+dt+"/"+lp+"/"+pf+".json",
+            type: "GET",
+            dataType: "json",
+
+            success: function(data) {
+                $("#reserva_hora_inicio option").remove();
+
+                var toAppend = '';
+                $.each(data,function(i,o){
+                toAppend += '<option value='+o.hour+'>'+o.hour+'</option>';
+              });
+
+             $('#reserva_hora_inicio').append(toAppend);
+            }
+        });
+      };
+
+      $(".find").change(function (){
+        change();
+      });
+    </script>
+
+
+</body>
+</html>
+
+<% else %>
+  <%= yield %>
+<% end %>

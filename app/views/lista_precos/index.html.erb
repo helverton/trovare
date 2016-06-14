@@ -1,0 +1,51 @@
+<%- model_class = ListaPreco -%>
+<div>
+  <%= link_to 'Nova lista de preço', new_lista_preco_path, :class => 'btn btn-success fa fa-plus-circle' %>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Serviços
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                  <table id="filter" width="100%" class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Serviço</th>
+                        <th>Preço</th>
+                        <th>Tempo</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @lista_precos.each do |lista_preco| %>
+                        <tr>
+                          <td><%= link_to lista_preco.id, lista_preco_path(lista_preco) %></td>
+                          <td><%= lista_preco.servico.nome %></td>
+                          <td><%= lista_preco.preco %></td>
+                          <td><%= lista_preco.tempo %></td>
+                          <td>
+                          <%= case lista_preco.status 
+                              when 1 then 'Ativo' 
+                              when 0 then 'Inativo' 
+                              else lista_preco.status end %>
+                          </td>
+                          <td>
+                            <%= link_to 'Detalhes', lista_preco, :class => 'btn btn-default btn-xs' %>
+                            <%= link_to 'Editar', edit_lista_preco_path(lista_preco), :class => 'btn btn-default btn-xs' %>
+                            <%= link_to 'Excluir', lista_preco, method: :delete, data: { confirm: 'Tem certeza que deseja excluir?' }, :class => 'btn btn-danger btn-xs'%>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

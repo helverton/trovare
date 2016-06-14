@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  preco: 1.5
+  tempo: 1
+  status: 1
+  servico_id: 
+  entidade_id: 
+
+two:
+  preco: 1.5
+  tempo: 1
+  status: 1
+  servico_id: 
+  entidade_id: 

@@ -1,0 +1,64 @@
+<%= form_for @horario, :html => { :class => "form-horizontal horario" } do |f| %>
+
+  <% if @horario.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@horario.errors.count, "erro") %> verifique:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @horario.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="dia_semana"><i class="fa fa-pencil-square-o"></i> Dia da semana</label>
+    <div>
+      <select name="horario[dia_semana]" id="horario_dia_semana" class="form-control">
+          <% @weeks.each do |day| %>
+            <% if (@horario.dia_semana.to_s.eql? day[0]) %>
+              <% @id = day[0] %> <% @des = day[1] %>
+            <% end %>
+          <% end %>
+          <option value="<%= @id %>"><%= @des %></option>
+          <% @weeks.each do |day| %>
+            <% if (@horario.dia_semana.to_s.eql? day[0]) %>
+              <% @id = day[0] %> <% @des = day[1] %>
+            <% end %>
+            <option value="<%= day[0] %>"><%= day[1] %></option>
+          <% end %>
+      </select>
+    </div>
+    <%=f.error_span(:dia_semana) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="hora_inicio"><i class="fa fa-pencil-square-o"></i> Hora inicio</label>
+    <div>
+      <%= f.time_field :hora_inicio, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:hora_inicio) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="fim"><i class="fa fa-pencil-square-o"></i> Hora fim</label>
+    <div>
+      <%= f.time_field :hora_fim, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:hora_fim) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="data"><i class="fa fa-pencil-square-o"></i> Data</label>
+    <div>
+      <%= f.date_field :data, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:data) %>
+  </div>
+
+  <div>
+    <button type="submit" name="commit" class="btn btn-success btn-block">Salvar horário</button>
+  </div>
+
+<% end %>

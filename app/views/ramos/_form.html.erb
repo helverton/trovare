@@ -1,0 +1,37 @@
+<%= form_for @ramo, :html => { :class => "form-horizontal ramo" } do |f| %>
+
+  <% if @ramo.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@ramo.errors.count, "erro") %> verifique:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @ramo.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="nome"><i class="fa fa-pencil-square-o"></i> Nome</label>
+    <div>
+      <%= f.text_field :nome, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:nome) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="descricao"><i class="fa fa-pencil-square-o"></i> Descrição</label>
+    <div>
+      <%= f.text_field :descricao, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:descricao) %>
+  </div>
+
+  <div>
+    <button type="submit" name="commit" class="btn btn-success btn-block">Salvar ramo</button>
+  </div>
+
+<% end %>

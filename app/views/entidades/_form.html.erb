@@ -1,0 +1,190 @@
+<%= form_for @entidade, :html => { :class => "form-horizontal entidade" } do |f| %>
+
+  <% if @entidade.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@entidade.errors.count, "erro") %> verifique:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @entidade.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="nome"><i class="fa fa-pencil-square-o"></i> Nome</label>
+    <div>
+      <%= f.text_field :nome, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:nome) %>
+  </div>
+
+  <% if ((current_user.tipo.eql? 1)) %>
+    <div class="form-group">
+      <label class="control-label" for="status"><i class="fa fa-pencil-square-o"></i> Status</label>
+      <div>
+        <select name="entidade[status]" id="entidade_status" class="form-control">
+          <% if(!@entidade.status.nil?) %>
+            <option value="<%= @entidade.status %>"><%= case @entidade.status when 1 then 'Ativo' when 0 then 'Inativo' end %></option>
+            <option value="1">Ativo</option>
+            <option value="0">Inativo</option>  
+          <% end %>
+        </select>
+      </div>
+      <%=f.error_span(:tipo) %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="control-label" for="ramo"><i class="fa fa-pencil-square-o"></i> Ramo</label>
+    <div>
+      <%= f.collection_select :ramo_id, Ramo.order(:nome),:id,:nome, {prompt: "Selecione"}, {class: "form-control"} %>
+      <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newRamo">
+        Cadastrar
+      </button>
+
+    </div>
+    <%=f.error_span(:ramo_id) %>
+  </div>
+  
+
+  <div class="form-group">
+    <label class="control-label" for="cnpj"><i class="fa fa-pencil-square-o"></i> CNPJ</label>
+    <div>
+      <%= f.text_field :cnpj, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:cnpj) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="latitude"><i class="fa fa-pencil-square-o"></i> Latitude</label>
+    <div>
+      <%= f.text_field :latitude, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:latitude) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="longitude"><i class="fa fa-pencil-square-o"></i> Longitude</label>
+    <div>
+      <%= f.text_field :longitude, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:longitude) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="estado"><i class="fa fa-pencil-square-o"></i> Estado</label>
+    <div>
+      <%= f.text_field :estado, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:estado) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="cidade"><i class="fa fa-pencil-square-o"></i> Cidade</label>
+    <div>
+      <%= f.text_field :cidade, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:cidade) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="bairro"><i class="fa fa-pencil-square-o"></i> Bairro</label>
+    <div>
+      <%= f.text_field :bairro, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:bairro) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="cep"><i class="fa fa-pencil-square-o"></i> Cep</label>
+    <div>
+      <%= f.text_field :cep, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:cep) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="rua"><i class="fa fa-pencil-square-o"></i> Rua</label>
+    <div>
+      <%= f.text_field :rua, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:rua) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="numero"><i class="fa fa-pencil-square-o"></i> Numero</label>
+    <div>
+      <%= f.text_field :numero, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:numero) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="telefone"><i class="fa fa-pencil-square-o"></i> Telefone</label>
+    <div>
+      <%= f.text_field :telefone, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:telefone) %>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="contato"><i class="fa fa-pencil-square-o"></i> Contato</label>
+    <div>
+      <%= f.text_field :contato, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:contato) %>
+  </div>
+
+  <div>
+    <button type="submit" name="commit" class="btn btn-success btn-block">Salvar entidade</button>
+  </div>
+<% end %>
+
+
+
+
+
+
+
+
+<!---Modal ramos-->
+  <!-- Modal -->
+  <div class="modal fade" id="newRamo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div>
+
+        <div class="col-lg-8 forms">
+          <div class="col-lg-12 active">
+            <div class="startform-header">
+              <div class="left">
+                <a href="/entidades/new">
+                  <i class="fa fa-times fa-2x close"></i>
+                </a>
+              </div>
+              <div>
+                <i class="fa fa-magic fa-2x"></i>
+              </div>
+              <h2>cadastrar novo <strong>Ramo</strong></h2>
+              <a href=""></a>
+            </div>
+            <form class="form-horizontal ramo" id="new_ramo" action="/ramos" accept-charset="UTF-8" method="post">
+              <input name="utf8" type="hidden" value="✓">
+              <input name="modal" type="hidden" value="modal">
+              <input type="hidden" name="authenticity_token" value="QLBrtpAK5dtfWq4ejRor324NZ1Aof36wdXcYF8Hlvz0jNmTHpKcH4tlEY/GBqcy80a30KDvze1+uxwXLoGKupw==">
+              <div class="form-group">
+                <label class="control-label" for="nome"><i class="fa fa-pencil-square-o"></i> Nome</label>
+                <div>
+                  <input class="form-control" type="text" name="ramo[nome]" id="ramo_nome">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="descricao"><i class="fa fa-pencil-square-o"></i> Descrição</label>
+                <div>
+                  <input class="form-control" type="text" name="ramo[descricao]" id="ramo_descricao">
+                </div>
+              </div>
+              <div>
+                <button type="submit" name="commit" class="btn btn-success btn-block">Salvar ramo</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>

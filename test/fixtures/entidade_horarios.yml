@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entidade_id: 
+  horario_id: 
+
+two:
+  entidade_id: 
+  horario_id: 

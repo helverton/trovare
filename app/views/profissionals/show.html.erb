@@ -1,0 +1,27 @@
+<%- model_class = Profissional -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:nome) %>:</strong></dt>
+  <dd><%= @profissional.nome %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
+  <dd><%= @profissional.email %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:telefone) %>:</strong></dt>
+  <dd><%= @profissional.telefone %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
+  <dd><%= @profissional.status %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:entidade_id) %>:</strong></dt>
+  <dd><%= @profissional.entidade_id %></dd>
+</dl>
+
+<%= link_to t('Voltar'),
+              profissionals_path, :class => 'btn btn-default'  %>
+<%= link_to t('Editar'),
+              edit_profissional_path(@profissional), :class => 'btn btn-default' %>
+<%= link_to t('Excluir'),
+              profissional_path(@profissional),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Você tem certeza?')) },
+              :class => 'btn btn-danger' %>
